@@ -1,9 +1,7 @@
 package org.example.movieproject.controller;
 
 import lombok.RequiredArgsConstructor;
-import org.example.movieproject.dto.MovieCreateRequest;
-import org.example.movieproject.dto.MovieCreateResponse;
-import org.example.movieproject.dto.MovieGetResponse;
+import org.example.movieproject.dto.*;
 import org.example.movieproject.service.MovieService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -34,5 +32,13 @@ public class MovieController {
             @PathVariable Long movieId
     ) {
         return ResponseEntity.status(HttpStatus.OK).body(movieService.getOne(movieId));
+    }
+
+    @PutMapping("/movies/{movieId}")
+    public ResponseEntity<MovieUpdateResponse> update(
+            @PathVariable Long movieId,
+            @RequestBody MovieUpdateRequest request
+    ) {
+        return ResponseEntity.status(HttpStatus.OK).body(movieService.update(movieId, request));
     }
 }

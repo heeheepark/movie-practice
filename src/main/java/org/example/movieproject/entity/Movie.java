@@ -19,4 +19,8 @@ public class Movie {
     public Movie(String title) {
         this.title = title;
     }
+
+    public void updateMovie(String title) {
+        this.title = title;
+    }
 }

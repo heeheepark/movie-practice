@@ -1,9 +1,7 @@
 package org.example.movieproject.service;
 
 import lombok.RequiredArgsConstructor;
-import org.example.movieproject.dto.MovieCreateRequest;
-import org.example.movieproject.dto.MovieCreateResponse;
-import org.example.movieproject.dto.MovieGetResponse;
+import org.example.movieproject.dto.*;
 import org.example.movieproject.entity.Movie;
 import org.example.movieproject.repository.MovieRepository;
 import org.springframework.stereotype.Service;
@@ -44,5 +42,16 @@ public class MovieService {
         );
 
         return new MovieGetResponse(movie.getId(), movie.getTitle());
+    }
+
+    @Transactional
+    public MovieUpdateResponse update(Long movieId, MovieUpdateRequest request) {
+        Movie movie = movieRepository.findById(movieId).orElseThrow(
+                () -> new IllegalArgumentException("해당 영화가 없습니다.")
+        );
+
+        movie.updateMovie(request.getTitle());
+
+        return new MovieUpdateResponse(movie.getId(), movie.getTitle());
     }
 }
