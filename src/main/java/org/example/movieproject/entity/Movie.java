@@ -11,7 +11,12 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Movie {
 
-    @Id @GeneratedValue(strategy =  GenerationType.IDENTITY)
+    @Id
+    @GeneratedValue(strategy =  GenerationType.IDENTITY)
     private Long id;
     private String title;
+
+    public Movie(String title) {
+        this.title = title;
+    }
 }
