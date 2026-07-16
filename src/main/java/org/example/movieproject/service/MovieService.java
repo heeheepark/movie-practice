@@ -54,4 +54,14 @@ public class MovieService {
 
         return new MovieUpdateResponse(movie.getId(), movie.getTitle());
     }
+
+    @Transactional
+    public void delete(Long movieId) {
+        boolean existence = movieRepository.existsById(movieId);
+        if (!existence) {
+            throw new IllegalArgumentException("해당 영화가 없습니다.");
+        }
+
+        movieRepository.deleteById(movieId);
+    }
 }
