@@ -20,7 +20,7 @@ public class MovieService {
     public MovieCreateResponse create(MovieCreateRequest request) {
         Movie movie = new Movie(request.getTitle());
         Movie saveMovie = movieRepository.save(movie);
-        return new MovieCreateResponse(saveMovie.getId(), saveMovie.getTitle());
+        return new MovieCreateResponse(saveMovie.getId(), saveMovie.getTitle(), saveMovie.getCreatedAt(), saveMovie.getModifiedAt());
     }
 
     @Transactional(readOnly = true)
@@ -29,7 +29,7 @@ public class MovieService {
         List<MovieGetResponse> dtos = new ArrayList<>();
 
         for (Movie movie : movies) {
-            dtos.add(new MovieGetResponse(movie.getId(), movie.getTitle()));
+            dtos.add(new MovieGetResponse(movie.getId(), movie.getTitle(), movie.getCreatedAt(), movie.getModifiedAt()));
         }
 
         return dtos;
@@ -41,7 +41,7 @@ public class MovieService {
                 () -> new IllegalArgumentException("해당 영화가 없습니다.")
         );
 
-        return new MovieGetResponse(movie.getId(), movie.getTitle());
+        return new MovieGetResponse(movie.getId(), movie.getTitle(), movie.getCreatedAt(), movie.getModifiedAt());
     }
 
     @Transactional
@@ -52,7 +52,7 @@ public class MovieService {
 
         movie.updateMovie(request.getTitle());
 
-        return new MovieUpdateResponse(movie.getId(), movie.getTitle());
+        return new MovieUpdateResponse(movie.getId(), movie.getTitle(), movie.getCreatedAt(), movie.getModifiedAt());
     }
 
     @Transactional
