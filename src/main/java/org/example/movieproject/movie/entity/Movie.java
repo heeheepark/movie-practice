@@ -1,4 +1,4 @@
-package org.example.movieproject.entity;
+package org.example.movieproject.movie.entity;
 
 import jakarta.persistence.*;
 import lombok.AccessLevel;

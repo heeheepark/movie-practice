@@ -1,9 +1,13 @@
-package org.example.movieproject.service;
+package org.example.movieproject.movie.service;
 
 import lombok.RequiredArgsConstructor;
-import org.example.movieproject.dto.*;
-import org.example.movieproject.entity.Movie;
-import org.example.movieproject.repository.MovieRepository;
+import org.example.movieproject.movie.dto.MovieCreateRequest;
+import org.example.movieproject.movie.dto.MovieCreateResponse;
+import org.example.movieproject.movie.dto.MovieGetResponse;
+import org.example.movieproject.movie.dto.MovieUpdateRequest;
+import org.example.movieproject.movie.dto.MovieUpdateResponse;
+import org.example.movieproject.movie.entity.Movie;
+import org.example.movieproject.movie.repository.MovieRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 

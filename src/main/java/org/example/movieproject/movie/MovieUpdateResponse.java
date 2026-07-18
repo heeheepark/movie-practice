@@ -1,4 +1,4 @@
-package org.example.movieproject.dto;
+package org.example.movieproject.movie.dto;
 
 import lombok.Getter;
 

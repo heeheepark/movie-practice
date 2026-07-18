@@ -1,8 +1,8 @@
-package org.example.movieproject.controller;
+package org.example.movieproject.movie.controller;
 
 import lombok.RequiredArgsConstructor;
-import org.example.movieproject.dto.*;
-import org.example.movieproject.service.MovieService;
+import org.example.movieproject.movie.dto.MovieGetResponse;
+import org.example.movieproject.movie.service.MovieService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
