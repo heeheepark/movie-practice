@@ -70,4 +70,17 @@ public class ReviewService {
 
         return new ReviewUpdateResponse(review.getId(), review.getContent());
     }
+
+    @Transactional
+    public void delete(Long movieId, Long reviewId) {
+        Review review = reviewRepository.findById(reviewId).orElseThrow(
+                () -> new IllegalArgumentException("해당 리뷰가 없습니다.")
+        );
+
+        if (!review.getMovie().getId().equals(movieId)) {
+            throw new IllegalArgumentException("해당 영화의 리뷰가 아닙니다.");
+        }
+
+        reviewRepository.deleteById(reviewId);
+    }
 }
