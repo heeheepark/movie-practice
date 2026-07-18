@@ -1,6 +1,7 @@
 package org.example.movieproject.review.entity;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -14,6 +15,8 @@ public class Review {
 
     @Id @GeneratedValue(strategy =  GenerationType.IDENTITY)
     private Long id;
+
+    @NotBlank(message = "리뷰 내용을 입력해주세요.")
     private String content;
 
     @ManyToOne(fetch = FetchType.LAZY)
