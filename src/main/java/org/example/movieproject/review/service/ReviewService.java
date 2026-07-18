@@ -2,9 +2,12 @@ package org.example.movieproject.review.service;
 
 import lombok.RequiredArgsConstructor;
 import org.example.movieproject.movie.entity.Movie;
+import org.example.movieproject.movie.exception.MovieNotFoundException;
 import org.example.movieproject.movie.repository.MovieRepository;
 import org.example.movieproject.review.dto.*;
 import org.example.movieproject.review.entity.Review;
+import org.example.movieproject.review.exception.ReviewNotBelongToMovieException;
+import org.example.movieproject.review.exception.ReviewNotFoundException;
 import org.example.movieproject.review.repository.ReviewRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -22,7 +25,7 @@ public class ReviewService {
     @Transactional
     public ReviewCreateResponse create(Long movieId, ReviewCreateRequeest request) {
         Movie movie = movieRepository.findById(movieId).orElseThrow(
-                () -> new IllegalArgumentException("해당 영화가 없습니다.")
+                () -> new MovieNotFoundException("해당 영화가 없습니다.")
         );
 
         Review review = new Review(request.getContent(), movie);
@@ -46,11 +49,11 @@ public class ReviewService {
     @Transactional(readOnly = true)
     public ReviewGetResponse getOne(Long movieId, Long reviewId) {
         Review review = reviewRepository.findById(reviewId).orElseThrow(
-                () -> new IllegalArgumentException("해당 리뷰가 없습니다.")
+                () -> new ReviewNotFoundException("해당 리뷰가 없습니다.")
         );
 
         if (!review.getMovie().getId().equals(movieId)) {
-            throw new IllegalArgumentException("해당 영화의 리뷰가 아닙니다.");
+            throw new ReviewNotBelongToMovieException("해당 영화의 리뷰가 아닙니다.");
         }
 
         return new ReviewGetResponse(review.getId(), review.getContent());
@@ -59,11 +62,11 @@ public class ReviewService {
     @Transactional
     public ReviewUpdateResponse update(Long movieId, Long reviewId, ReviewUpdateRequest request) {
         Review review = reviewRepository.findById(reviewId).orElseThrow(
-                () -> new IllegalArgumentException("해당 리뷰가 없습니다.")
+                () -> new ReviewNotFoundException("해당 리뷰가 없습니다.")
         );
 
         if (!review.getMovie().getId().equals(movieId)) {
-            throw new IllegalArgumentException("해당 영화의 리뷰가 아닙니다.");
+            throw new ReviewNotBelongToMovieException("해당 영화의 리뷰가 아닙니다.");
         }
 
         review.updateReview(request.getContent());
@@ -74,11 +77,11 @@ public class ReviewService {
     @Transactional
     public void delete(Long movieId, Long reviewId) {
         Review review = reviewRepository.findById(reviewId).orElseThrow(
-                () -> new IllegalArgumentException("해당 리뷰가 없습니다.")
+                () -> new ReviewNotFoundException("해당 리뷰가 없습니다.")
         );
 
         if (!review.getMovie().getId().equals(movieId)) {
-            throw new IllegalArgumentException("해당 영화의 리뷰가 아닙니다.");
+            throw new ReviewNotBelongToMovieException("해당 영화의 리뷰가 아닙니다.");
         }
 
         reviewRepository.deleteById(reviewId);

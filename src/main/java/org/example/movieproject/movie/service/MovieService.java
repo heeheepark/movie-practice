@@ -7,6 +7,7 @@ import org.example.movieproject.movie.dto.MovieGetResponse;
 import org.example.movieproject.movie.dto.MovieUpdateRequest;
 import org.example.movieproject.movie.dto.MovieUpdateResponse;
 import org.example.movieproject.movie.entity.Movie;
+import org.example.movieproject.movie.exception.MovieNotFoundException;
 import org.example.movieproject.movie.repository.MovieRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -42,7 +43,7 @@ public class MovieService {
     @Transactional(readOnly = true)
     public MovieGetResponse getOne(Long movieId) {
         Movie movie = movieRepository.findById(movieId).orElseThrow(
-                () -> new IllegalArgumentException("해당 영화가 없습니다.")
+                () -> new MovieNotFoundException("해당 영화가 없습니다.")
         );
 
         return new MovieGetResponse(movie.getId(), movie.getTitle(), movie.getCreatedAt(), movie.getModifiedAt());
@@ -51,7 +52,7 @@ public class MovieService {
     @Transactional
     public MovieUpdateResponse update(Long movieId, MovieUpdateRequest request) {
         Movie movie = movieRepository.findById(movieId).orElseThrow(
-                () -> new IllegalArgumentException("해당 영화가 없습니다.")
+                () -> new MovieNotFoundException("해당 영화가 없습니다.")
         );
 
         movie.updateMovie(request.getTitle());
@@ -63,7 +64,7 @@ public class MovieService {
     public void delete(Long movieId) {
         boolean existence = movieRepository.existsById(movieId);
         if (!existence) {
-            throw new IllegalArgumentException("해당 영화가 없습니다.");
+            throw new MovieNotFoundException("해당 영화가 없습니다.");
         }
 
         movieRepository.deleteById(movieId);
