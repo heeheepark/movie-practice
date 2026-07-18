@@ -1,7 +1,7 @@
 package org.example.movieproject.movie.controller;
 
 import lombok.RequiredArgsConstructor;
-import org.example.movieproject.movie.dto.MovieGetResponse;
+import org.example.movieproject.movie.dto.*;
 import org.example.movieproject.movie.service.MovieService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
