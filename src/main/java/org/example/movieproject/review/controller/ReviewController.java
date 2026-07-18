@@ -1,9 +1,7 @@
 package org.example.movieproject.review.controller;
 
 import lombok.RequiredArgsConstructor;
-import org.example.movieproject.review.dto.ReviewCreateRequeest;
-import org.example.movieproject.review.dto.ReviewCreateResponse;
-import org.example.movieproject.review.dto.ReviewGetResponse;
+import org.example.movieproject.review.dto.*;
 import org.example.movieproject.review.service.ReviewService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -37,5 +35,14 @@ public class ReviewController {
             @PathVariable Long reviewId
     ) {
         return ResponseEntity.ok(reviewService.getOne(movieId, reviewId));
+    }
+
+    @PutMapping("/movies/{movieId}/reviews/{reviewId}")
+    public ResponseEntity<ReviewUpdateResponse> update(
+            @PathVariable Long movieId,
+            @PathVariable Long reviewId,
+            @RequestBody ReviewUpdateRequest request
+    ) {
+        return ResponseEntity.ok(reviewService.update(movieId, reviewId, request));
     }
 }

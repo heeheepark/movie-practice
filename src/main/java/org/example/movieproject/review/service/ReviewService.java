@@ -3,9 +3,7 @@ package org.example.movieproject.review.service;
 import lombok.RequiredArgsConstructor;
 import org.example.movieproject.movie.entity.Movie;
 import org.example.movieproject.movie.repository.MovieRepository;
-import org.example.movieproject.review.dto.ReviewCreateRequeest;
-import org.example.movieproject.review.dto.ReviewCreateResponse;
-import org.example.movieproject.review.dto.ReviewGetResponse;
+import org.example.movieproject.review.dto.*;
 import org.example.movieproject.review.entity.Review;
 import org.example.movieproject.review.repository.ReviewRepository;
 import org.springframework.stereotype.Service;
@@ -56,5 +54,20 @@ public class ReviewService {
         }
 
         return new ReviewGetResponse(review.getId(), review.getContent());
+    }
+
+    @Transactional
+    public ReviewUpdateResponse update(Long movieId, Long reviewId, ReviewUpdateRequest request) {
+        Review review = reviewRepository.findById(reviewId).orElseThrow(
+                () -> new IllegalArgumentException("해당 리뷰가 없습니다.")
+        );
+
+        if (!review.getMovie().getId().equals(movieId)) {
+            throw new IllegalArgumentException("해당 영화의 리뷰가 아닙니다.");
+        }
+
+        review.updateReview(request.getContent());
+
+        return new ReviewUpdateResponse(review.getId(), review.getContent());
     }
 }
